@@ -1,0 +1,5 @@
+//allows jshint to work with atom text editor and not throw errors
+
+{
+  "esversion": 6
+}
