@@ -1,0 +1,16 @@
+{
+  "name": "content_scraper_project_6",
+  "version": "1.0.0",
+  "description": "Treehouse TechDegree project6. Pulls data from a website and saves as csv file.",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web",
+    "content",
+    "scraper"
+  ],
+  "author": "Chris Underwood",
+  "license": "MIT"
+}
