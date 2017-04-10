@@ -12,5 +12,8 @@
     "scraper"
   ],
   "author": "Chris Underwood",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "x-ray": "^2.3.2"
+  }
 }
