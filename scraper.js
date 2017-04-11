@@ -1,8 +1,12 @@
 const fs = require('fs');
 const Xray = require('x-ray');
+var json2csv = require('json2csv');
 let x = Xray();
-let shirtsObj = {};
+let timeStamp;
 
+
+
+let fields = ['Title', 'Price', 'ImageURL', 'URL', 'Time'];
 
 fs.openSync('data.js','w');
 
@@ -16,7 +20,22 @@ x('http://www.shirts4mike.com/shirts.php', {
     })
   }])
 })(function(err, shirtsDataObj) {
-  for (let prop in shirtsDataObj) {
-    console.log('shirtsDataObj.' + prop, '=', shirtsDataObj[prop]);
+  let shirtsArray = [];
+  // for (let prop in shirtsDataObj) {
+  //   console.log('shirtsDataObj.' + prop, '=', shirtsDataObj[prop]);
+  // }
+
+  for(let z = 0; z < shirtsDataObj.links.length; z++) {
+    let shirtObj = {
+      "title": shirtsDataObj.links[z].shirtData.title,
+      "price": shirtsDataObj.links[z].shirtData.price,
+      "imgURL": shirtsDataObj.links[z].shirtData.imgURL,
+      "url": shirtsDataObj.links[z].href,
+      "time": timeStamp
+    };
+    shirtsArray.push(shirtObj);
   }
+  //let result = json2csv({ data: shirtsDataObj, fields: fields });
+  console.log(shirtsArray);
+
 });
