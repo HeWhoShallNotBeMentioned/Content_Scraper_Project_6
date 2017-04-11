@@ -2,7 +2,7 @@ const fs = require('fs');
 const Xray = require('x-ray');
 var json2csv = require('json2csv');
 let x = Xray();
-let timeStamp;
+let timeStamp = new Date();
 
 
 
@@ -41,3 +41,11 @@ x('http://www.shirts4mike.com/shirts.php', {
   console.log(shirtsArray);
 
 });
+
+////code for getting day month and year for file name. Perhaps put in a function?
+// var dateObj = new Date();
+// var month = dateObj.getUTCMonth() + 1; //months from 1-12
+// var day = dateObj.getUTCDate();
+// var year = dateObj.getUTCFullYear();
+//
+// newdate = year + "/" + month + "/" + day;
