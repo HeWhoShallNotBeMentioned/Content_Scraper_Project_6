@@ -8,7 +8,9 @@ let timeStamp;
 
 let fields = ['Title', 'Price', 'ImageURL', 'URL', 'Time'];
 
-fs.openSync('data.js','w');
+if (!fs.existsSync('data/')) {
+  fs.mkdirSync('data/');
+}
 
 x('http://www.shirts4mike.com/shirts.php', {
   links: x('ul.products li', [{
