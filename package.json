@@ -14,6 +14,7 @@
   "author": "Chris Underwood",
   "license": "MIT",
   "dependencies": {
+    "json2csv": "^3.7.4",
     "x-ray": "^2.3.2"
   }
 }
