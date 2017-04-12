@@ -3,7 +3,7 @@ const Xray = require('x-ray');
 let json2csv = require('json2csv');
 let x = Xray();
 let timeStamp = new Date();
-let fields = ['Title', 'Price', 'ImageURL', 'URL', 'Time'];
+let fields = ['title', 'price', 'imgURL', 'url', 'time'];
 
 function getTime() {
   var dateObj = new Date();
@@ -43,14 +43,9 @@ x('http://www.shirts4mike.com/shirts.php', {
     };
     shirtsArray.push(shirtObj);
   }
-  let shirtsArray2 = JSON.stringify(shirtsArray);
-  let shirtsArray3 = JSON.parse(shirtsArray2);
 
-  let result = json2csv({ data: shirtsArray2, fields: fields });
-  //console.log(shirtsArray);
-  console.log(shirtsArray2);
-  //console.log(shirtsArray3);
-  console.log(result);
+  let result = json2csv({ data: shirtsArray, fields: fields });
+  
   fs.writeFileSync('data/' + getTime() +'.csv', result);
 
 });
