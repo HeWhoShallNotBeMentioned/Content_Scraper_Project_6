@@ -1,20 +1,18 @@
 const fs = require('fs');
 const Xray = require('x-ray');
-var json2csv = require('json2csv');
+let json2csv = require('json2csv');
 let x = Xray();
 let timeStamp = new Date();
+let fields = ['Title', 'Price', 'ImageURL', 'URL', 'Time'];
+
 function getTime() {
   var dateObj = new Date();
-  var month = dateObj.getUTCMonth() + 1; //months from 1-12
-  var day = dateObj.getUTCDate();
-  var year = dateObj.getUTCFullYear();
+  var month = dateObj.getMonth() + 1; //months from 1-12
+  var day = dateObj.getDate();
+  var year = dateObj.getFullYear();
   newdate = year + "_" + month + "_" + day;
   return newdate;
 }
-
-
-
-let fields = ['Title', 'Price', 'ImageURL', 'URL', 'Time'];
 
 if (!fs.existsSync('data/')) {
   fs.mkdirSync('data/');
@@ -45,12 +43,14 @@ x('http://www.shirts4mike.com/shirts.php', {
     };
     shirtsArray.push(shirtObj);
   }
-  //let result = json2csv({ data: shirtsDataObj, fields: fields });
+  let shirtsArray2 = JSON.stringify(shirtsArray);
+  let shirtsArray3 = JSON.parse(shirtsArray2);
 
-
+  let result = json2csv({ data: shirtsArray2, fields: fields });
   //console.log(shirtsArray);
-  fs.writeFileSync('data/' + getTime() +'.csv', '9');
+  console.log(shirtsArray2);
+  //console.log(shirtsArray3);
+  console.log(result);
+  fs.writeFileSync('data/' + getTime() +'.csv', result);
 
 });
-
-////code for getting day month and year for file name. Perhaps put in a function?
