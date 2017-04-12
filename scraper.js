@@ -3,6 +3,14 @@ const Xray = require('x-ray');
 var json2csv = require('json2csv');
 let x = Xray();
 let timeStamp = new Date();
+function getTime() {
+  var dateObj = new Date();
+  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var day = dateObj.getUTCDate();
+  var year = dateObj.getUTCFullYear();
+  newdate = year + "_" + month + "_" + day;
+  return newdate;
+}
 
 
 
@@ -38,14 +46,11 @@ x('http://www.shirts4mike.com/shirts.php', {
     shirtsArray.push(shirtObj);
   }
   //let result = json2csv({ data: shirtsDataObj, fields: fields });
-  console.log(shirtsArray);
+
+
+  //console.log(shirtsArray);
+  fs.writeFileSync('data/' + getTime() +'.csv', '9');
 
 });
 
 ////code for getting day month and year for file name. Perhaps put in a function?
-// var dateObj = new Date();
-// var month = dateObj.getUTCMonth() + 1; //months from 1-12
-// var day = dateObj.getUTCDate();
-// var year = dateObj.getUTCFullYear();
-//
-// newdate = year + "/" + month + "/" + day;
