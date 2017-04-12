@@ -1,3 +1,5 @@
+
+
 const fs = require('fs');
 const Xray = require('x-ray');
 let json2csv = require('json2csv');
@@ -45,7 +47,9 @@ x('http://www.shirts4mike.com/shirts.php', {
   }
 
   let result = json2csv({ data: shirtsArray, fields: fields });
-  
+
   fs.writeFileSync('data/' + getTime() +'.csv', result);
+
+  console.log(err.message);
 
 });
