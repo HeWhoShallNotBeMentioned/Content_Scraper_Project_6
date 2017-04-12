@@ -29,7 +29,12 @@ x('http://www.shirts4mike.com/shirts.php', {
       imgURL: 'img@src',
     })
   }])
-})(function(err, shirtsDataObj) {
+})
+(function(err, shirtsDataObj) {
+  if (err) {
+    console.log(err.message);
+    fs.appendFileSync('scraper-error.log', '\n['+ timeStamp + "] " + err.message);
+  }
   let shirtsArray = [];
   // for (let prop in shirtsDataObj) {
   //   console.log('shirtsDataObj.' + prop, '=', shirtsDataObj[prop]);
@@ -50,6 +55,6 @@ x('http://www.shirts4mike.com/shirts.php', {
 
   fs.writeFileSync('data/' + getTime() +'.csv', result);
 
-  console.log(err.message);
+
 
 });
