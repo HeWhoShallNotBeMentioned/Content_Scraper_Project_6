@@ -7,6 +7,7 @@ let x = Xray();
 let timeStamp = new Date();
 let fields = ['title', 'price', 'imgURL', 'url', 'time'];
 
+//creates time for name of daily data output file
 function getTime() {
   var dateObj = new Date();
   var month = dateObj.getMonth() + 1; //months from 1-12
@@ -16,10 +17,12 @@ function getTime() {
   return newdate;
 }
 
+//checks if data folder exists. If not, creates the folder
 if (!fs.existsSync('data/')) {
   fs.mkdirSync('data/');
 }
 
+//x-ray data scraper
 x('http://www.shirts4mike.com/shirts.php', {
   links: x('ul.products li', [{
     href: 'a@href',
@@ -30,7 +33,9 @@ x('http://www.shirts4mike.com/shirts.php', {
     })
   }])
 })
+//function that processes object from the screen scraper into csv data saved in daily file
 (function(err, shirtsDataObj) {
+  //error message handling if there is a problem with receiving data from the scraper
   if (err) {
     console.log(err.message);
     fs.appendFileSync('scraper-error.log', '\n['+ timeStamp + "] " + err.message);
@@ -39,7 +44,7 @@ x('http://www.shirts4mike.com/shirts.php', {
   // for (let prop in shirtsDataObj) {
   //   console.log('shirtsDataObj.' + prop, '=', shirtsDataObj[prop]);
   // }
-
+  //pulls out the data in object
   for(let z = 0; z < shirtsDataObj.links.length; z++) {
     let shirtObj = {
       "title": shirtsDataObj.links[z].shirtData.title,
@@ -50,11 +55,8 @@ x('http://www.shirts4mike.com/shirts.php', {
     };
     shirtsArray.push(shirtObj);
   }
-
+  //Converts data from JSON to csv format
   let result = json2csv({ data: shirtsArray, fields: fields });
-
+  //writes the data to the daily file.
   fs.writeFileSync('data/' + getTime() +'.csv', result);
-
-
-
 });
