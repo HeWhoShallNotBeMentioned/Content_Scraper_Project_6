@@ -1,12 +1,13 @@
 
-
+const http = require('http');
 const fs = require('fs');
 const Xray = require('x-ray');
+const site = 'http://www.shirts4mike.com/shirts.php';
 let json2csv = require('json2csv');
 let x = Xray();
 let timeStamp = new Date();
 let fields = ['title', 'price', 'imgURL', 'url', 'time'];
-
+let newdate;
 //creates time for name of daily data output file
 function getTime() {
   var dateObj = new Date();
@@ -23,7 +24,7 @@ if (!fs.existsSync('data/')) {
 }
 
 //x-ray data scraper
-x('http://www.shirts4mike.com/shirts.php', {
+x(site, {
   links: x('ul.products li', [{
     href: 'a@href',
     shirtData: x('a@href', {
@@ -37,8 +38,13 @@ x('http://www.shirts4mike.com/shirts.php', {
 (function(err, shirtsDataObj) {
   //error message handling if there is a problem with receiving data from the scraper
   if (err) {
-    console.log(err.message);
-    fs.appendFileSync('scraper-error.log', '\n['+ timeStamp + "] " + err.message);
+    console.log("error object ". err);
+    const statusCodeError = new Error (`There was an error getting the site ${site}.
+		    	`); // (${http.STATUS_CODES[err.code]})
+    console.log(statusCodeError);
+
+
+    fs.appendFileSync('scraper-error.log', '\n['+ timeStamp + "] " + statusCodeError + " " + err.message);
   }
   let shirtsArray = [];
   // for (let prop in shirtsDataObj) {
